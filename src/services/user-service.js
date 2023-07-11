@@ -32,7 +32,7 @@ class UserService {
 
     async signin(data) {
         try {
-            const user = this.getUserByEmail(data.email);
+            const user = await this.getUserByEmail(data.email);
             if (!user) {
                 throw {
                     message: 'no user found',

@@ -6,6 +6,15 @@ class UserRepository extends CrudRepository {
         super(User);
     }
 
+    // async create(data) {
+    //     try {
+    //         const response = await this.User.create(data);
+    //         return response;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
+
     async findBy(data) {
         try {
             const response = await this.User.findOne(data);

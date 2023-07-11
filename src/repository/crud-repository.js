@@ -10,7 +10,7 @@ class CrudRepository {
             const result = await this.model.create(data);
             return result;
         } catch (error) {
-            console.log(`\n\n\n\n\nDATA IN THE REPO LAYER: ${JSON.stringify(data)}\n\n\n\n\n`)
+            console.log(`\n\n\n\n\nDATA IN THE REPO LAYER ERROR: ${JSON.stringify(data)}\n\n\n\n\n`)
             console.log("Something went wrong in crud repo");
             throw error;
         }

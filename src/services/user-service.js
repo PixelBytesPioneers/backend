@@ -7,6 +7,13 @@ class UserService {
 
     async signup(data) {
         try {
+            console.log(`\n\n\n\nUSER DATA IN SERVICE LAYER: ${JSON.stringify(data)}\n\n\n\n`)
+            // jsonData = {
+            //     name: data.name,
+            //     email: data.email,
+            //     password: data.password
+            // }
+            // const user = await this.userRepository.create(jsonData);
             const user = await this.userRepository.create(data);
             return user;
         } catch (error) {

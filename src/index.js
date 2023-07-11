@@ -1,8 +1,9 @@
-express = require('express');
+const express = require('express');
 
-bodyParser = require('body-parser');
-apiRoutes = require('./routes/index.js');
+const bodyParser = require('body-parser');
+const apiRoutes = require('./routes/index.js');
 const {PORT} = require('./config/serverConfig');
+const connect = require('./config/database.js');
 
 const app = express();
 
@@ -13,8 +14,10 @@ const setupAndStartServer = () => {
 
     app.use('/api', apiRoutes);
 
-    app.listen(PORT, () => {
+    app.listen(PORT, async () => {
         console.log(`Server started on Port: ${PORT}`);
+        await connect();
+        console.log("CONNECTED TO MONGO DB.");
     });
 }
 

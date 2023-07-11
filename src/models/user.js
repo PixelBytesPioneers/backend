@@ -1,6 +1,7 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const {JWT_SECRET} = require('./serverConfig.js');
 
 const userSchema = new mongoose.Schema(
   {
@@ -21,24 +22,24 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// userSchema.pre("save", function (next) {
-//   const user = User;
-//   const SALT = bcrypt.genSaltSync(9);
-//   const encryptedPassword = bcrypt.hashSync(user.password, SALT);
-//   user.password = encryptedPassword;
-//   next();
-// });
+userSchema.pre("save", function (next) {
+  const user = User;
+  const SALT = bcrypt.genSaltSync(9);
+  const encryptedPassword = bcrypt.hashSync(user.password, SALT);
+  user.password = encryptedPassword;
+  next();
+});
 
-// userSchema.methods.comparePassword = function compare(password) {
-//   return bcrypt.compareSync(password, this.password);
-// };
+userSchema.methods.comparePassword = function compare(password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
-// userSchema.methods.genJWT = function () {
-//   return jwt.sign({ id: this._id, email: this.email }, "twitter_secret", {
-//     expiresIn: "1h",
-//   });
-// };
+userSchema.methods.genJWT = function () {
+  return jwt.sign({ id: this._id, email: this.email }, JWT_SECRET, {
+    expiresIn: "1d",
+  });
+};
 
 const User = mongoose.model("User", userSchema);
 
-export default User;
+module.exports = User;

@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const apiRoutes = require('./routes/index.js');
 const {PORT} = require('./config/serverConfig');
 const connect = require('./config/database.js');
+const passportAuth = require('./config/jwt-middleware.js');
+const passport = require('passport');
+
 
 const app = express();
 
@@ -11,6 +14,9 @@ const setupAndStartServer = () => {
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
+
+    app.use(passport.initialize());
+    passportAuth(passport);
 
     app.use('/api', apiRoutes);
 
